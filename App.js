@@ -77,14 +77,12 @@ export default function App() {
     >
       <ScrollView style={styles.container}>
         <FlatList
+          style={styles.flatList}
           //extraData={tasks}
           data={chat}
           renderItem={({ item }) => <ChatItem item={item} />}
           keyExtractor={(item) => item.id}
         />
-        {/* <ChatItem item={chat[0]} />
-        <ChatItem item={chat[1]} />
-        <ChatItem item={chat[2]} /> */}
 
         <StatusBar style="light" />
       </ScrollView>
@@ -99,5 +97,8 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     height: "100%",
+  },
+  flatList: {
+    marginTop: 40,
   },
 });
