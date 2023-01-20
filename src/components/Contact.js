@@ -57,8 +57,11 @@ const styles = StyleSheet.create({
   left: {
     flex: 1,
     marginTop: 10,
-    marginBottom: 15,
-    marginLeft: 10,
+    paddingVertical: 5,
+    marginBottom: 10,
+    paddingLeft: 10,
+    backgroundColor: "rgba(117, 174, 177, 0.15)",
+    borderRadius: 5,
   },
   name: {
     fontWeight: "bold",
