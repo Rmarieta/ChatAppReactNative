@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import AllChats from "../screens/AllChats";
 import EmptyScreen from "../screens/EmptyScreen";
 import IonIcons from "react-native-vector-icons/Ionicons";
+import Settings from "../screens/Settings";
 
 const bottomTab = createBottomTabNavigator();
 
@@ -90,7 +91,7 @@ const TabNavigator = () => {
       />
       <bottomTab.Screen
         name="Settings"
-        component={EmptyScreen}
+        component={Settings}
         options={{
           headerTitleAlign: "center",
           headerTitleStyle: { color: "white" },
