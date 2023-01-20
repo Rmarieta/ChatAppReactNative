@@ -5,6 +5,7 @@ import AllChats from "../screens/AllChats";
 import SingleChat from "../screens/SingleChat";
 import TabNavigator from "./TabNavigator";
 import IonIcons from "react-native-vector-icons/Ionicons";
+import Contacts from "../screens/Contacts";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,15 @@ const Navigator = () => {
         <Stack.Screen
           name="Chat"
           component={SingleChat}
+          options={{
+            headerTitleAlign: "center",
+            headerTitleStyle: { color: "white" },
+            headerTintColor: "#75aeb1",
+          }}
+        />
+        <Stack.Screen
+          name="Contacts"
+          component={Contacts}
           options={{
             headerTitleAlign: "center",
             headerTitleStyle: { color: "white" },

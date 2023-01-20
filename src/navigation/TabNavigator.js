@@ -48,7 +48,7 @@ const TabNavigator = () => {
       <bottomTab.Screen
         name="Chats"
         component={AllChats}
-        options={{
+        options={({ navigation }) => ({
           tabBarLabelStyle: { color: "white" },
           tabBarIcon: () => (
             <IonIcons name="chatbubbles-sharp" style={styles.icon} />
@@ -57,6 +57,7 @@ const TabNavigator = () => {
           headerTitleStyle: { color: "white" },
           headerRight: () => (
             <IonIcons
+              onPress={() => navigation.navigate("Contacts")}
               name="open"
               style={{
                 color: "#75aeb1",
@@ -75,7 +76,7 @@ const TabNavigator = () => {
               }}
             />
           ),
-        }}
+        })}
       />
       <bottomTab.Screen
         name="Settings"
