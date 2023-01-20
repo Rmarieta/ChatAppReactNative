@@ -45,7 +45,7 @@
     "id": "4",
     "user": {
       "id": "u5",
-      "status": "Disponible",
+      "status": "En ballade à la montagne",
       "image": "https://raw.githubusercontent.com/Rmarieta/ChatAppReactNative/main/assets/users/nath.png",
       "name": "Nathan"
     },
