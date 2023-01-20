@@ -23,13 +23,14 @@ const HeaderHome = () => {
             paddingVertical: 0,
           }}
           selectionColor="rgba(1,12,26,0.6)"
-          inputStyle={{ color: "#010c1a" }}
+          inputStyle={{ color: "white" }}
           inputContainerStyle={{
-            backgroundColor: "#75aeb1",
+            backgroundColor: "#13242f",
+            borderRadius: 5,
           }}
-          placeholderTextColor={"#010c1a"}
-          searchIcon={{ color: "#010c1a" }}
-          clearIcon={{ color: "#010c1a" }}
+          placeholderTextColor={"white"}
+          searchIcon={{ color: "white" }}
+          clearIcon={{ color: "white" }}
           placeholder="Search"
           onChangeText={updateSearch}
           value={search}
@@ -48,8 +49,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingBottom: 20,
     paddingTop: 20,
-    borderBottomColor: "#75aeb1",
-    borderBottomWidth: 2,
+    borderBottomColor: "#13242f",
+    borderBottomWidth: 4,
   },
   searchContainer: {
     flexDirection: "row",
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
   },
   text: {
-    color: "#75aeb1",
+    color: "white",
     fontSize: 30,
     height: 65,
   },

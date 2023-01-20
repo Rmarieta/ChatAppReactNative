@@ -15,10 +15,10 @@ const ChatText = ({ text }) => {
         styles.container,
         {
           backgroundColor: checkId()
-            ? "rgba(12,52,62, 0.9)"
-            : "rgba(51, 60, 62, 0.9)",
+            ? "rgba(19, 36, 47, 0.85)"
+            : "rgba(41, 43, 44, 0.85)",
           alignSelf: checkId() ? "flex-end" : "flex-start",
-          shadowColor: checkId() ? "#239dc1" : "#2e3a3f",
+          shadowColor: checkId() ? "#13242f" : "#292b2c",
         },
       ]}
     >
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   date: {
-    color: "#239dc1",
+    color: "#75aeb1",
     alignSelf: "flex-end",
   },
 });

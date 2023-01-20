@@ -53,6 +53,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.3)",
+    borderTopWidth: 2,
+    borderTopColor: "#75aeb1",
   },
   keyboardView: {
     flex: 1,

@@ -26,7 +26,7 @@ const Navigator = () => {
           component={SingleChat}
           options={{
             headerTitleAlign: "center",
-            headerTitleStyle: { color: "#75aeb1" },
+            headerTitleStyle: { color: "white" },
             headerTintColor: "#75aeb1",
           }}
         />
@@ -39,6 +39,6 @@ export default Navigator;
 
 const styles = StyleSheet.create({
   topBar: {
-    backgroundColor: "#010c1a",
+    backgroundColor: "#000812",
   },
 });

@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 0,
     height: 100,
     backgroundColor: "rgba(2,12,25,0.85)",
-    borderColor: "#75aeb1",
-    borderBottomWidth: 2,
+    borderColor: "#13242f",
+    borderBottomWidth: 4,
     alignItems: "center",
   },
   image: {

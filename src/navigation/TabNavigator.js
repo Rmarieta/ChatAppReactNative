@@ -19,8 +19,9 @@ const TabNavigator = () => {
         name="Status"
         component={EmptyScreen}
         options={{
+          tabBarLabelStyle: { color: "white" },
           headerTitleAlign: "center",
-          headerTitleStyle: { color: "#75aeb1" },
+          headerTitleStyle: { color: "white" },
           tabBarIcon: () => <IonIcons name="clipboard" style={styles.icon} />,
         }}
       />
@@ -28,8 +29,9 @@ const TabNavigator = () => {
         name="Calls"
         component={EmptyScreen}
         options={{
+          tabBarLabelStyle: { color: "white" },
           headerTitleAlign: "center",
-          headerTitleStyle: { color: "#75aeb1" },
+          headerTitleStyle: { color: "white" },
           tabBarIcon: () => <IonIcons name="call-sharp" style={styles.icon} />,
         }}
       />
@@ -37,8 +39,9 @@ const TabNavigator = () => {
         name="Camera"
         component={EmptyScreen}
         options={{
+          tabBarLabelStyle: { color: "white" },
           headerTitleAlign: "center",
-          headerTitleStyle: { color: "#75aeb1" },
+          headerTitleStyle: { color: "white" },
           tabBarIcon: () => <IonIcons name="camera" style={styles.icon} />,
         }}
       />
@@ -46,11 +49,12 @@ const TabNavigator = () => {
         name="Chats"
         component={AllChats}
         options={{
+          tabBarLabelStyle: { color: "white" },
           tabBarIcon: () => (
             <IonIcons name="chatbubbles-sharp" style={styles.icon} />
           ),
           headerTitleAlign: "center",
-          headerTitleStyle: { color: "#75aeb1" },
+          headerTitleStyle: { color: "white" },
           headerRight: () => (
             <IonIcons
               name="open"
@@ -78,7 +82,9 @@ const TabNavigator = () => {
         component={EmptyScreen}
         options={{
           headerTitleAlign: "center",
-          headerTitleStyle: { color: "#75aeb1" },
+          headerTitleStyle: { color: "white" },
+          tabBarLabelStyle: { color: "white" },
+
           tabBarIcon: () => <IonIcons name="cog-sharp" style={styles.icon} />,
         }}
       />
@@ -103,7 +109,7 @@ const styles = StyleSheet.create({
     height: 95,
   },
   icon: {
-    color: "white",
+    color: "#75aeb1",
     fontSize: 25,
   },
 });
