@@ -30,7 +30,7 @@ const ChatItem = ({ item }) => {
         </Text>
       </View>
       <View style={styles.imgContainer}>
-        <Image source={item.user.image} style={styles.image} />
+        <Image source={{ uri: item.user.image }} style={styles.image} />
       </View>
     </Pressable>
   );
