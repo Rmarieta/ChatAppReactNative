@@ -19,39 +19,49 @@ const TabNavigator = () => {
         name="Status"
         component={EmptyScreen}
         options={{
-          tabBarLabelStyle: { color: "white" },
+          tabBarActiveTintColor: "#75aeb1",
           headerTitleAlign: "center",
           headerTitleStyle: { color: "white" },
-          tabBarIcon: () => <IonIcons name="clipboard" style={styles.icon} />,
+          tabBarIcon: ({ color }) => (
+            <IonIcons name="clipboard" style={styles.icon} color={color} />
+          ),
         }}
       />
       <bottomTab.Screen
         name="Calls"
         component={EmptyScreen}
         options={{
-          tabBarLabelStyle: { color: "white" },
+          tabBarActiveTintColor: "#75aeb1",
           headerTitleAlign: "center",
           headerTitleStyle: { color: "white" },
-          tabBarIcon: () => <IonIcons name="call-sharp" style={styles.icon} />,
+          tabBarIcon: ({ color }) => (
+            <IonIcons name="call-sharp" style={styles.icon} color={color} />
+          ),
         }}
       />
       <bottomTab.Screen
         name="Camera"
         component={EmptyScreen}
         options={{
-          tabBarLabelStyle: { color: "white" },
+          tabBarActiveTintColor: "#75aeb1",
           headerTitleAlign: "center",
           headerTitleStyle: { color: "white" },
-          tabBarIcon: () => <IonIcons name="camera" style={styles.icon} />,
+          tabBarIcon: ({ color }) => (
+            <IonIcons name="camera" style={styles.icon} color={color} />
+          ),
         }}
       />
       <bottomTab.Screen
         name="Chats"
         component={AllChats}
         options={({ navigation }) => ({
-          tabBarLabelStyle: { color: "white" },
-          tabBarIcon: () => (
-            <IonIcons name="chatbubbles-sharp" style={styles.icon} />
+          tabBarActiveTintColor: "#75aeb1",
+          tabBarIcon: ({ color }) => (
+            <IonIcons
+              name="chatbubbles-sharp"
+              style={styles.icon}
+              color={color}
+            />
           ),
           headerTitleAlign: "center",
           headerTitleStyle: { color: "white" },
@@ -84,9 +94,11 @@ const TabNavigator = () => {
         options={{
           headerTitleAlign: "center",
           headerTitleStyle: { color: "white" },
-          tabBarLabelStyle: { color: "white" },
+          tabBarActiveTintColor: "#75aeb1",
 
-          tabBarIcon: () => <IonIcons name="cog-sharp" style={styles.icon} />,
+          tabBarIcon: ({ color }) => (
+            <IonIcons name="cog-sharp" style={styles.icon} color={color} />
+          ),
         }}
       />
     </bottomTab.Navigator>
@@ -110,7 +122,6 @@ const styles = StyleSheet.create({
     height: 95,
   },
   icon: {
-    color: "#75aeb1",
     fontSize: 25,
   },
 });
