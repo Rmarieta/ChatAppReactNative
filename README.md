@@ -8,10 +8,16 @@ $ npx expo install @react-navigation/native @react-navigation/native-stack @reac
 $ npm install react-native-safe-area-context
 ```
 
-Dependencies for the backend with AWS amplify
+Dependencies for the backend with AWS amplify :
 
 ```
-npm install aws-amplify aws-amplify-react-native amazon-cognito-identity-js @react-native-community/netinfo @react-native-async-storage/async-storage
+$ npm install aws-amplify aws-amplify-react-native amazon-cognito-identity-js @react-native-community/netinfo @react-native-async-storage/async-storage
+```
+
+To generate the GraphQL queries :
+
+```
+$ amplify codegen add
 ```
 
 <br/>

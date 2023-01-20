@@ -5,11 +5,22 @@ import {
   FlatList,
   ImageBackground,
 } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Contact from "../components/Contact";
-import chat from "../../assets/data/chat.json";
+// import users from "../../assets/data/chat.json";
+
+import { API, graphqlOperation } from "aws-amplify";
+import { listUsers } from "../graphql/queries";
 
 const Contacts = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    API.graphql(graphqlOperation(listUsers)).then((res) => {
+      setUsers(res.data?.listUsers?.items);
+    });
+  }, []);
+
   return (
     <ImageBackground
       source={require("../../assets/background.jpg")}
@@ -19,7 +30,7 @@ const Contacts = () => {
       <View style={styles.container}>
         <FlatList
           style={styles.flatList}
-          data={chat}
+          data={users}
           renderItem={({ item }) => <Contact item={item} />}
           keyExtractor={(item) => item.id}
         />
