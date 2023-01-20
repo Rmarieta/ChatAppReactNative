@@ -1,11 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
-import AllChats from "./src/screens/AllChats";
+import Navigator from "./src/navigation";
 
 export default function App() {
   return (
     <>
-      <AllChats />
+      <Navigator />
       <StatusBar style="light" />
     </>
   );

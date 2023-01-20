@@ -21,7 +21,7 @@ const chat = [
     lastMessage: {
       id: "m1",
       text: "C'est noté !",
-      time: "2023-01-19T19:22:00.000Z",
+      createdAt: "2023-01-19T19:22:00.000Z",
     },
   },
   {
@@ -35,7 +35,7 @@ const chat = [
     lastMessage: {
       id: "m2",
       text: "J'arrive tout bientôt",
-      time: "2023-01-19T16:25:00.000Z",
+      createdAt: "2023-01-19T16:25:00.000Z",
     },
   },
   {
@@ -49,7 +49,7 @@ const chat = [
     lastMessage: {
       id: "m3",
       text: "Oublie pas d'aller déposer la lettre, ça ferme à 18h30.",
-      time: "2023-01-19T15:57:00.000Z",
+      createdAt: "2023-01-19T15:57:00.000Z",
     },
   },
   {
@@ -63,7 +63,7 @@ const chat = [
     lastMessage: {
       id: "m4",
       text: "Il faudra qu'on rediscute de tout ça, de toute façon je prends le bus maintenant et j'arrive dans 15 minutes.",
-      time: "2023-01-19T13:38:00.000Z",
+      createdAt: "2023-01-19T13:38:00.000Z",
     },
   },
   {
@@ -77,7 +77,7 @@ const chat = [
     lastMessage: {
       id: "m5",
       text: "A demain, redis-moi vers quelle heure tu penses arriver.",
-      time: "2023-01-19T11:19:00.000Z",
+      createdAt: "2023-01-19T11:19:00.000Z",
     },
   },
   {
@@ -91,7 +91,7 @@ const chat = [
     lastMessage: {
       id: "m6",
       text: "Ca marche",
-      time: "2023-01-19T09:32:00.000Z",
+      createdAt: "2023-01-19T09:32:00.000Z",
     },
   },
   {
@@ -105,7 +105,7 @@ const chat = [
     lastMessage: {
       id: "m7",
       text: "Tu me rediras quand tu veux t'inscrire",
-      time: "2021-01-19T08:22:00.000Z",
+      createdAt: "2021-01-19T08:22:00.000Z",
     },
   },
 ];
@@ -114,7 +114,6 @@ const AllChats = () => {
   return (
     <ImageBackground
       source={require("../../assets/background.jpg")}
-      resizeMode="cover"
       style={styles.image}
       imageStyle={styles.imageStyle}
     >
@@ -139,9 +138,10 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    height: 800,
+    width: null,
+    height: null,
   },
   flatList: {
-    marginTop: 38,
+    marginTop: 0,
   },
 });
