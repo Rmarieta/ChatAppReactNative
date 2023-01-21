@@ -1,14 +1,53 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import React from "react";
+import { API, Auth, graphqlOperation } from "aws-amplify";
+import { createChatRoom, createUserChatRoom } from "../graphql/mutations";
+import { useNavigation } from "@react-navigation/native";
 
 const Contact = ({ item }) => {
+  const navigation = useNavigation();
+
+  const newChatRoom = async () => {
+    // check if there is already a chatroom
+
+    // create a new chatroom
+    const newChatRoomRes = await API.graphql(
+      graphqlOperation(createChatRoom, { input: {} })
+    );
+
+    if (!newChatRoomRes.data?.createChatRoom) {
+      console.log("Error creating the chatroom");
+    }
+
+    const newChatRoom = newChatRoomRes.data?.createChatRoom;
+
+    // add clicked contact to the chatroom
+    await API.graphql(
+      graphqlOperation(createUserChatRoom, {
+        input: {
+          chatRoomId: newChatRoom.id,
+          userId: item.id,
+        },
+      })
+    );
+
+    // add auth user to the chatroom
+    const authUser = await Auth.currentAuthenticatedUser();
+    await API.graphql(
+      graphqlOperation(createUserChatRoom, {
+        input: {
+          chatRoomId: newChatRoom.id,
+          userId: authUser.attributes.sub,
+        },
+      })
+    );
+
+    // navigate to chatroom
+    navigation.navigate("Chat", { id: newChatRoom.id, name: item.name });
+  };
+
   return (
-    <View
-      onPress={() =>
-        navigation.navigate("Chat", { id: item.id, name: item.name })
-      }
-      style={styles.container}
-    >
+    <Pressable onPress={newChatRoom} style={styles.container}>
       <View style={styles.content}>
         <View style={styles.left}>
           <Text style={styles.name} numberOfLines={1}>
@@ -24,7 +63,7 @@ const Contact = ({ item }) => {
       <View style={styles.imgContainer}>
         <Image source={{ uri: item.image }} style={styles.image} />
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -73,7 +112,7 @@ const styles = StyleSheet.create({
     color: "#75aeb1",
     fontSize: 15,
     textAlign: "left",
-    alignSelf: "flex-start",
+    alignSelf: "flex-end",
   },
   statContainer: {
     marginRight: 10,

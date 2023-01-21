@@ -31,6 +31,7 @@ function App() {
           id: userId,
           name: "Mock Name",
           status: "Disponible",
+          // dummy image
           image:
             "https://raw.githubusercontent.com/Rmarieta/ChatAppReactNative/backend/assets/users/dummy_user.png",
         };
