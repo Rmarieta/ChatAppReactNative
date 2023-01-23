@@ -22,7 +22,11 @@ const AllChats = () => {
       const res = await API.graphql(
         graphqlOperation(customListChatRooms, { id: authUser.attributes.sub })
       );
-      // console.log("\nResponse :\n", res.data.getUser.ChatRooms.items, "\n");
+      // console.log(
+      //   "\nResponse :\n",
+      //   res.data.getUser.ChatRooms.items[2].chatRoom.users.items,
+      //   "\n"
+      // );
       setChatRooms(res.data.getUser.ChatRooms.items);
     };
     fetchChatRooms();

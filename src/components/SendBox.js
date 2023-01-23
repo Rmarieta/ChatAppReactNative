@@ -3,12 +3,36 @@ import React, { useState } from "react";
 import IonIcons from "react-native-vector-icons/Ionicons";
 import AntIcons from "react-native-vector-icons/AntDesign";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { API, Auth, graphqlOperation } from "aws-amplify";
+import { createMessage, updateChatRoom } from "../graphql/mutations";
 
-const SendBox = () => {
+const SendBox = ({ chatroom }) => {
   const [message, setMessage] = useState("");
 
-  const onSend = () => {
+  const onSend = async () => {
+    const authUser = await Auth.currentAuthenticatedUser();
+
+    const newMessage = {
+      chatroomID: chatroom.id,
+      text: message,
+      userID: authUser.attributes.sub,
+    };
+
+    const res = await API.graphql(
+      graphqlOperation(createMessage, { input: newMessage })
+    );
     setMessage("");
+
+    // set last message of chat room
+    await API.graphql(
+      graphqlOperation(updateChatRoom, {
+        input: {
+          _version: chatroom._version,
+          chatRoomLastMessageId: res.data.createMessage.id,
+          id: chatroom.id,
+        },
+      })
+    );
   };
 
   return (
@@ -20,6 +44,7 @@ const SendBox = () => {
         placeholderTextColor={"white"}
         selectionColor="white"
         value={message}
+        onChangeText={setMessage}
       />
       <IonIcons onPress={onSend} style={styles.send} size={24} name="send" />
     </SafeAreaView>
@@ -44,6 +69,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    color: "white",
     backgroundColor: "#13242f",
     borderBottomLeftRadius: 5,
     borderTopLeftRadius: 5,

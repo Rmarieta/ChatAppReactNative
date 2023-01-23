@@ -1,16 +1,27 @@
 import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import { Auth } from "aws-amplify";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
 const ChatItem = ({ item }) => {
   const navigation = useNavigation();
+  const [userser, setUser] = useState(null);
 
-  console.log("\nCHAT :\n", item, "\n");
+  useEffect(() => {
+    const fetchUser = async () => {
+      const authUser = await Auth.currentAuthenticatedUser();
+      const userItem = item.users.items.find(
+        (elem) => elem.user.id !== authUser.attributes.sub
+      );
+      setUser(userItem?.user);
+    };
+    fetchUser();
+  }, []);
+
   const user = item.users.items[0].user;
-  console.log("\nUSERS :\n", user, "\n");
 
   return (
     <Pressable
@@ -24,13 +35,13 @@ const ChatItem = ({ item }) => {
           <Text style={styles.name} numberOfLines={1}>
             {user?.name}
           </Text>
-          <Text style={styles.date}>
-            {dayjs(item.lastMessage?.createdAt).fromNow(true)}
+          <Text numberOfLines={1} style={styles.date}>
+            {dayjs(item.LastMessage?.createdAt).fromNow(true)}
           </Text>
         </View>
 
         <Text numberOfLines={2} style={styles.msg}>
-          {item.lastMessage?.text}
+          {item.LastMessage?.text}
         </Text>
       </View>
       <View style={styles.imgContainer}>
@@ -47,7 +58,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 15,
     marginHorizontal: 0,
-    height: 100,
+    height: 120,
     backgroundColor: "rgba(2,12,25,0.85)",
     borderColor: "#13242f",
     borderBottomWidth: 4,
@@ -74,18 +85,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
     flex: 2,
-    fontSize: 15,
+    fontSize: 13,
   },
   date: {
     color: "#75aeb1",
     flex: 1,
     textAlign: "right",
-    fontSize: 14,
+    fontSize: 12,
     marginRight: 5,
   },
   msg: {
+    fontSize: 12,
     color: "#cccccc",
-    height: 50,
+    height: 60,
     backgroundColor: "rgba(117, 174, 177, 0.15)",
     borderRadius: 5,
     paddingHorizontal: 8,

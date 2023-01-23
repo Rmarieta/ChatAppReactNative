@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,20 +7,37 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import texts from "../../assets/data/texts.json";
 import ChatText from "../components/ChatText";
 import SendBox from "../components/SendBox";
+import { API, Auth, AuthModeStrategyType, graphqlOperation } from "aws-amplify";
+import { getChatRoom } from "../graphql/queries";
 
 const SingleChat = () => {
   const route = useRoute();
 
+  const [chatRoom, setChatRoom] = useState(null);
+
   const navigation = useNavigation();
+
+  const chatroomID = route.params.id;
 
   useEffect(() => {
     navigation.setOptions({ title: route.params.name });
   }, [route.params.name]);
+
+  useEffect(() => {
+    API.graphql(graphqlOperation(getChatRoom, { id: chatroomID })).then((res) =>
+      setChatRoom(res.data?.getChatRoom)
+    );
+  }, []);
+
+  if (!chatRoom) {
+    return <ActivityIndicator />;
+  }
 
   return (
     <KeyboardAvoidingView
@@ -36,11 +53,11 @@ const SingleChat = () => {
           <FlatList
             inverted
             style={styles.flatList}
-            data={texts}
+            data={chatRoom.Messages.items}
             renderItem={({ item }) => <ChatText text={item} />}
           />
 
-          <SendBox />
+          <SendBox chatroom={chatRoom} />
         </View>
       </ImageBackground>
     </KeyboardAvoidingView>

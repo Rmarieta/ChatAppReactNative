@@ -3,12 +3,18 @@ import React from "react";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 import { createChatRoom, createUserChatRoom } from "../graphql/mutations";
 import { useNavigation } from "@react-navigation/native";
+import { getCommonChatRoomWithUserId } from "../services/chatRoomService";
 
 const Contact = ({ item }) => {
   const navigation = useNavigation();
 
   const newChatRoom = async () => {
     // check if there is already a chatroom
+    const existingChatRooms = await getCommonChatRoomWithUserId(item.id);
+    if (existingChatRooms) {
+      navigation.navigate("Chat", { id: existingChatRooms.id });
+      return;
+    }
 
     // create a new chatroom
     const newChatRoomRes = await API.graphql(
@@ -74,7 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 25,
     marginHorizontal: 0,
-    height: 100,
+    height: 120,
     backgroundColor: "rgba(2,12,25,0.75)",
     borderColor: "#13242f",
     borderBottomWidth: 4,
@@ -105,12 +111,12 @@ const styles = StyleSheet.create({
   name: {
     fontWeight: "bold",
     color: "#fff",
-    fontSize: 18,
+    fontSize: 15,
     flex: 1,
   },
   status: {
     color: "#75aeb1",
-    fontSize: 15,
+    fontSize: 14,
     textAlign: "left",
     alignSelf: "flex-end",
   },

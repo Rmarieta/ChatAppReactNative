@@ -1,24 +1,32 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { Auth } from "aws-amplify";
 dayjs.extend(relativeTime);
 
 const ChatText = ({ text }) => {
-  const checkId = () => {
-    return text.user.id === "u1";
-  };
+  const [isMine, setisMine] = useState(false);
+
+  useEffect(() => {
+    const checkId = async () => {
+      const authUser = await Auth.currentAuthenticatedUser();
+
+      setisMine(text.userID === authUser.attributes.sub);
+    };
+    checkId();
+  }, []);
 
   return (
     <View
       style={[
         styles.container,
         {
-          backgroundColor: checkId()
+          backgroundColor: isMine
             ? "rgba(19, 36, 47, 0.85)"
             : "rgba(41, 43, 44, 0.85)",
-          alignSelf: checkId() ? "flex-end" : "flex-start",
-          shadowColor: checkId() ? "#13242f" : "#292b2c",
+          alignSelf: isMine ? "flex-end" : "flex-start",
+          shadowColor: isMine ? "#13242f" : "#292b2c",
         },
       ]}
     >
