@@ -27,7 +27,15 @@ const AllChats = () => {
       //   res.data.getUser.ChatRooms.items[2].chatRoom.users.items,
       //   "\n"
       // );
-      setChatRooms(res.data.getUser.ChatRooms.items);
+
+      // sort the chat rooms on the frontend
+      const rooms = res.data.getUser.ChatRooms.items;
+      const sortedRooms = rooms.sort(
+        (r1, r2) =>
+          new Date(r2.chatRoom.updatedAt) - new Date(r1.chatRoom.updatedAt)
+      );
+
+      setChatRooms(sortedRooms);
     };
     fetchChatRooms();
   }, []);

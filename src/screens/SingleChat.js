@@ -14,12 +14,13 @@ import texts from "../../assets/data/texts.json";
 import ChatText from "../components/ChatText";
 import SendBox from "../components/SendBox";
 import { API, Auth, AuthModeStrategyType, graphqlOperation } from "aws-amplify";
-import { getChatRoom } from "../graphql/queries";
+import { getChatRoom, listMessagesByChatRoom } from "../graphql/queries";
 
 const SingleChat = () => {
   const route = useRoute();
 
   const [chatRoom, setChatRoom] = useState(null);
+  const [messages, setMessages] = useState([]);
 
   const navigation = useNavigation();
 
@@ -30,14 +31,23 @@ const SingleChat = () => {
   }, [route.params.name]);
 
   useEffect(() => {
-    API.graphql(graphqlOperation(getChatRoom, { id: chatroomID })).then((res) =>
-      setChatRoom(res.data?.getChatRoom)
+    API.graphql(graphqlOperation(getChatRoom, { id: chatroomID })).then(
+      (res) => {
+        setChatRoom(res.data?.getChatRoom);
+      }
     );
-  }, []);
+  }, [chatroomID]);
 
-  if (!chatRoom) {
-    return <ActivityIndicator />;
-  }
+  useEffect(() => {
+    API.graphql(
+      graphqlOperation(listMessagesByChatRoom, {
+        chatroomID: chatroomID,
+        sortDirection: "DESC",
+      })
+    ).then((res) => {
+      setMessages(res.data?.listMessagesByChatRoom?.items);
+    });
+  }, [chatroomID]);
 
   return (
     <KeyboardAvoidingView
@@ -49,16 +59,22 @@ const SingleChat = () => {
         style={styles.image}
         imageStyle={styles.imageStyle}
       >
-        <View style={styles.container}>
-          <FlatList
-            inverted
-            style={styles.flatList}
-            data={chatRoom.Messages.items}
-            renderItem={({ item }) => <ChatText text={item} />}
-          />
+        {!chatRoom ? (
+          <View style={styles.loader}>
+            <ActivityIndicator size={60} />
+          </View>
+        ) : (
+          <View style={styles.container}>
+            <FlatList
+              inverted
+              style={styles.flatList}
+              data={messages}
+              renderItem={({ item }) => <ChatText text={item} />}
+            />
 
-          <SendBox chatroom={chatRoom} />
-        </View>
+            <SendBox chatroom={chatRoom} />
+          </View>
+        )}
       </ImageBackground>
     </KeyboardAvoidingView>
   );
@@ -67,6 +83,10 @@ const SingleChat = () => {
 export default SingleChat;
 
 const styles = StyleSheet.create({
+  loader: {
+    flex: 1,
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.3)",
