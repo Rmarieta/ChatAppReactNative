@@ -35,14 +35,21 @@ const ChatItem = ({ item }) => {
           <Text style={styles.name} numberOfLines={1}>
             {user?.name}
           </Text>
-          <Text numberOfLines={1} style={styles.date}>
-            {dayjs(item.LastMessage?.createdAt).fromNow(true)}
-          </Text>
+          {item.LastMessage && (
+            <Text numberOfLines={1} style={styles.date}>
+              {dayjs(item.LastMessage?.createdAt).fromNow(true)}
+            </Text>
+          )}
         </View>
-
-        <Text numberOfLines={2} style={styles.msg}>
-          {item.LastMessage?.text}
-        </Text>
+        {item.LastMessage ? (
+          <Text numberOfLines={2} style={styles.msg}>
+            {item.LastMessage?.text}
+          </Text>
+        ) : (
+          <Text numberOfLines={2} style={[styles.msg, { fontStyle: "italic" }]}>
+            No message yet.
+          </Text>
+        )}
       </View>
       <View style={styles.imgContainer}>
         <Image source={{ uri: user?.image }} style={styles.image} />
