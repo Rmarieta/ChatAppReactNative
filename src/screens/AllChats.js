@@ -26,8 +26,10 @@ const AllChats = () => {
     );
 
     // sort the chat rooms on the frontend
-    const rooms = res.data.getUser.ChatRooms.items.filter((r) => !r._deleted);
-    const sortedRooms = rooms.sort(
+    const rooms = res.data?.getUser?.ChatRooms?.items?.filter(
+      (r) => !r._deleted
+    );
+    const sortedRooms = rooms?.sort(
       (r1, r2) =>
         new Date(r2.chatRoom.updatedAt) - new Date(r1.chatRoom.updatedAt)
     );

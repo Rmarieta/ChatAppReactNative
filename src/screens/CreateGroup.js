@@ -194,15 +194,16 @@ const styles = StyleSheet.create({
   },
   create: {
     borderRadius: 3,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
   },
   text: {
     color: "white",
+    fontSize: 12,
   },
   select: {
     color: "white",
-    fontSize: 22,
+    fontSize: 18,
   },
   row: {
     flexDirection: "row",
