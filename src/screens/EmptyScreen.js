@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-    fontSize: 32,
+    fontSize: 28,
     textAlign: "center",
     marginHorizontal: 45,
     paddingVertical: 20,

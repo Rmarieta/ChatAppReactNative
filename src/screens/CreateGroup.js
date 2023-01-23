@@ -71,7 +71,13 @@ const CreateGroup = () => {
   const onCreateGroup = async () => {
     // create a new chatroom
     const newChatRoomRes = await API.graphql(
-      graphqlOperation(createChatRoom, { input: { name } })
+      graphqlOperation(createChatRoom, {
+        input: {
+          name,
+          image:
+            "https://raw.githubusercontent.com/Rmarieta/ChatAppReactNative/backend/assets/users/group.png",
+        },
+      })
     );
 
     if (!newChatRoomRes.data?.createChatRoom) {
