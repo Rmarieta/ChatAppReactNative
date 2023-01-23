@@ -26,7 +26,7 @@ const AllChats = () => {
     );
 
     // sort the chat rooms on the frontend
-    const rooms = res.data.getUser.ChatRooms.items;
+    const rooms = res.data.getUser.ChatRooms.items.filter((r) => !r._deleted);
     const sortedRooms = rooms.sort(
       (r1, r2) =>
         new Date(r2.chatRoom.updatedAt) - new Date(r1.chatRoom.updatedAt)
@@ -38,21 +38,6 @@ const AllChats = () => {
 
   useEffect(() => {
     fetchChatRooms();
-
-    // console.log("\n\nSTART\n\n:");
-    // for (let index = 0; index < 3; index++) {
-    //   console.log("\nChatroom : ", chatRooms[index].chatRoom);
-    //   console.log(
-    //     "\nLast message : ",
-    //     chatRooms[index].chatRoom.LastMessage.text
-    //   );
-    //   console.log(
-    //     "\nUsers involved in the message : ",
-    //     chatRooms[index].chatRoom.users.items[0].user.name,
-    //     ", ",
-    //     chatRooms[index].chatRoom.users.items[1].user.name
-    //   );
-    // }
   }, []);
 
   return (

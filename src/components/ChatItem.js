@@ -39,14 +39,17 @@ const ChatItem = ({ item }) => {
   return (
     <Pressable
       onPress={() =>
-        navigation.navigate("Chat", { id: chatRoom.id, name: user?.name })
+        navigation.navigate("Chat", {
+          id: chatRoom.id,
+          name: chatRoom.name || user?.name,
+        })
       }
       style={styles.container}
     >
       <View style={styles.content}>
         <View style={styles.row}>
           <Text style={styles.name} numberOfLines={1}>
-            {user?.name}
+            {chatRoom.name || user?.name}
           </Text>
           {chatRoom.LastMessage && (
             <Text numberOfLines={1} style={styles.date}>

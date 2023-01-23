@@ -16,6 +16,7 @@ import SendBox from "../components/SendBox";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 import { getChatRoom, listMessagesByChatRoom } from "../graphql/queries";
 import { onCreateMessage, onUpdateChatRoom } from "../graphql/subscriptions";
+import IonIcons from "react-native-vector-icons/Ionicons";
 
 const SingleChat = () => {
   const route = useRoute();
@@ -28,8 +29,26 @@ const SingleChat = () => {
   const chatroomID = route.params.id;
 
   useEffect(() => {
-    navigation.setOptions({ title: route.params.name });
-  }, [route.params.name]);
+    navigation.setOptions({
+      title: route.params.name,
+      headerRight: () => (
+        <IonIcons
+          onPress={() =>
+            navigation.navigate("About", {
+              id: chatroomID,
+              targetName: route.params.name,
+            })
+          }
+          name="information-circle-outline"
+          style={{
+            color: "#75aeb1",
+            fontSize: 25,
+            marginRight: 5,
+          }}
+        />
+      ),
+    });
+  }, [route.params.name, chatroomID]);
 
   useEffect(() => {
     API.graphql(graphqlOperation(getChatRoom, { id: chatroomID })).then(

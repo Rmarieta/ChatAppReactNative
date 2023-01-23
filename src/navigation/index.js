@@ -7,6 +7,7 @@ import TabNavigator from "./TabNavigator";
 import IonIcons from "react-native-vector-icons/Ionicons";
 import Contacts from "../screens/Contacts";
 import CreateGroup from "../screens/CreateGroup";
+import GroupInfo from "../screens/GroupInfo";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,15 @@ const Navigator = () => {
         <Stack.Screen
           name="Chat"
           component={SingleChat}
+          options={{
+            headerTitleAlign: "center",
+            headerTitleStyle: { color: "white" },
+            headerTintColor: "#75aeb1",
+          }}
+        />
+        <Stack.Screen
+          name="About"
+          component={GroupInfo}
           options={{
             headerTitleAlign: "center",
             headerTitleStyle: { color: "white" },

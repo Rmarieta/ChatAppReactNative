@@ -71,7 +71,7 @@ const CreateGroup = () => {
   const onCreateGroup = async () => {
     // create a new chatroom
     const newChatRoomRes = await API.graphql(
-      graphqlOperation(createChatRoom, { input: {} })
+      graphqlOperation(createChatRoom, { input: { name } })
     );
 
     if (!newChatRoomRes.data?.createChatRoom) {
