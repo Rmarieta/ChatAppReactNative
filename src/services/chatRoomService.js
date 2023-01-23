@@ -10,10 +10,11 @@ export const getCommonChatRoomWithUserId = async (userId) => {
 
   const myChatRooms = res.data?.getUser?.ChatRooms?.items || [];
 
-  // check those with user2
+  // check those with user2 (and only between 2 users)
   const rightChatRooms = myChatRooms.find((room) => {
-    return room.chatRoom.users.items.some(
-      (userItem) => userItem.user.id === userId
+    return (
+      room.chatRoom.users.items.length === 2 &&
+      room.chatRoom.users.items.some((userItem) => userItem.user.id === userId)
     );
   });
 

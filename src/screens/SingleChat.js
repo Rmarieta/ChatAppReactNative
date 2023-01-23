@@ -13,8 +13,9 @@ import { useRoute, useNavigation } from "@react-navigation/native";
 import texts from "../../assets/data/texts.json";
 import ChatText from "../components/ChatText";
 import SendBox from "../components/SendBox";
-import { API, Auth, AuthModeStrategyType, graphqlOperation } from "aws-amplify";
+import { API, Auth, graphqlOperation } from "aws-amplify";
 import { getChatRoom, listMessagesByChatRoom } from "../graphql/queries";
+import { onCreateMessage, onUpdateChatRoom } from "../graphql/subscriptions";
 
 const SingleChat = () => {
   const route = useRoute();
@@ -36,6 +37,17 @@ const SingleChat = () => {
         setChatRoom(res.data?.getChatRoom);
       }
     );
+
+    const subscription = API.graphql(
+      graphqlOperation(onUpdateChatRoom, { filter: { id: { eq: chatroomID } } })
+    ).subscribe({
+      next: ({ value }) => {
+        setChatRoom((c) => ({ ...(c || {}), ...value.data.onUpdateChatRoom }));
+      },
+      error: (error) => console.warn(error),
+    });
+
+    return () => subscription.unsubscribe();
   }, [chatroomID]);
 
   useEffect(() => {
@@ -47,6 +59,22 @@ const SingleChat = () => {
     ).then((res) => {
       setMessages(res.data?.listMessagesByChatRoom?.items);
     });
+
+    // subscribe to new messages
+    const subscription = API.graphql(
+      // filtering to only subscribe to messages of this chatroom
+      graphqlOperation(onCreateMessage, {
+        filter: { chatroomID: { eq: chatroomID } },
+      })
+    ).subscribe({
+      next: ({ value }) => {
+        setMessages((m) => [value.data.onCreateMessage, ...m]);
+      },
+      error: (error) => console.warn(error),
+    });
+
+    // to avoid memory leaks
+    return () => subscription.unsubscribe();
   }, [chatroomID]);
 
   return (

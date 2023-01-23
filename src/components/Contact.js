@@ -1,59 +1,31 @@
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 import { createChatRoom, createUserChatRoom } from "../graphql/mutations";
 import { useNavigation } from "@react-navigation/native";
 import { getCommonChatRoomWithUserId } from "../services/chatRoomService";
 
-const Contact = ({ item }) => {
+const Contact = ({
+  item,
+  onPress = () => {},
+  selectable = false,
+  isSelected = false,
+}) => {
   const navigation = useNavigation();
 
-  const newChatRoom = async () => {
-    // check if there is already a chatroom
-    const existingChatRooms = await getCommonChatRoomWithUserId(item.id);
-    if (existingChatRooms) {
-      navigation.navigate("Chat", { id: existingChatRooms.id });
-      return;
-    }
-
-    // create a new chatroom
-    const newChatRoomRes = await API.graphql(
-      graphqlOperation(createChatRoom, { input: {} })
-    );
-
-    if (!newChatRoomRes.data?.createChatRoom) {
-      console.log("Error creating the chatroom");
-    }
-
-    const newChatRoom = newChatRoomRes.data?.createChatRoom;
-
-    // add clicked contact to the chatroom
-    await API.graphql(
-      graphqlOperation(createUserChatRoom, {
-        input: {
-          chatRoomId: newChatRoom.id,
-          userId: item.id,
-        },
-      })
-    );
-
-    // add auth user to the chatroom
-    const authUser = await Auth.currentAuthenticatedUser();
-    await API.graphql(
-      graphqlOperation(createUserChatRoom, {
-        input: {
-          chatRoomId: newChatRoom.id,
-          userId: authUser.attributes.sub,
-        },
-      })
-    );
-
-    // navigate to chatroom
-    navigation.navigate("Chat", { id: newChatRoom.id, name: item.name });
-  };
-
   return (
-    <Pressable onPress={newChatRoom} style={styles.container}>
+    <Pressable
+      onPress={() => onPress()}
+      style={[
+        styles.container,
+        {
+          backgroundColor:
+            selectable && isSelected
+              ? "rgba(83, 123, 126, 0.75)"
+              : "rgba(2,12,25,0.75)",
+        },
+      ]}
+    >
       <View style={styles.content}>
         <View style={styles.left}>
           <Text style={styles.name} numberOfLines={1}>
@@ -81,7 +53,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     marginHorizontal: 0,
     height: 120,
-    backgroundColor: "rgba(2,12,25,0.75)",
     borderColor: "#13242f",
     borderBottomWidth: 4,
     alignItems: "center",

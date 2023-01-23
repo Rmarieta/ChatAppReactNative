@@ -2,18 +2,20 @@ import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import { Auth } from "aws-amplify";
+import { Auth, API, graphqlOperation } from "aws-amplify";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
+import { onUpdateChatRoom } from "../graphql/subscriptions";
 
 const ChatItem = ({ item }) => {
   const navigation = useNavigation();
-  const [userser, setUser] = useState(null);
+  const [user, setUser] = useState(null);
+  const [chatRoom, setChatRoom] = useState(item);
 
   useEffect(() => {
     const fetchUser = async () => {
       const authUser = await Auth.currentAuthenticatedUser();
-      const userItem = item.users.items.find(
+      const userItem = chatRoom.users.items.find(
         (elem) => elem.user.id !== authUser.attributes.sub
       );
       setUser(userItem?.user);
@@ -21,12 +23,23 @@ const ChatItem = ({ item }) => {
     fetchUser();
   }, []);
 
-  const user = item.users.items[0].user;
+  useEffect(() => {
+    const subscription = API.graphql(
+      graphqlOperation(onUpdateChatRoom, { filter: { id: { eq: item.id } } })
+    ).subscribe({
+      next: ({ value }) => {
+        setChatRoom((c) => ({ ...(c || {}), ...value.data.onUpdateChatRoom }));
+      },
+      error: (error) => console.warn(error),
+    });
+
+    return () => subscription.unsubscribe();
+  }, [item.id]);
 
   return (
     <Pressable
       onPress={() =>
-        navigation.navigate("Chat", { id: item.id, name: user?.name })
+        navigation.navigate("Chat", { id: chatRoom.id, name: user?.name })
       }
       style={styles.container}
     >
@@ -35,15 +48,15 @@ const ChatItem = ({ item }) => {
           <Text style={styles.name} numberOfLines={1}>
             {user?.name}
           </Text>
-          {item.LastMessage && (
+          {chatRoom.LastMessage && (
             <Text numberOfLines={1} style={styles.date}>
-              {dayjs(item.LastMessage?.createdAt).fromNow(true)}
+              {dayjs(chatRoom.LastMessage?.createdAt).fromNow(true)}
             </Text>
           )}
         </View>
-        {item.LastMessage ? (
+        {chatRoom.LastMessage ? (
           <Text numberOfLines={2} style={styles.msg}>
-            {item.LastMessage?.text}
+            {chatRoom.LastMessage?.text}
           </Text>
         ) : (
           <Text numberOfLines={2} style={[styles.msg, { fontStyle: "italic" }]}>
