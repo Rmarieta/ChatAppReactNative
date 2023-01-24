@@ -18,7 +18,7 @@ Create group (left) or Delete group members (right) functionalities
 <br/>
 
 <p align="center">
-<img src="assets/gifs/chat.gif" alt="no image" width="30%" />
+<img src="assets/gifs/chat.gif" alt="no image" width="25%" />
 </p>
 
 <br/>
