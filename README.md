@@ -9,7 +9,6 @@ As displayed below, the application allows multiple users to have live conversat
 <br/>
 <br/>
 <br/>
-<br/>
 
 <h2 align="center">
 Create group (left) or Delete group members (right) functionalities
