@@ -29,6 +29,18 @@ const AllChats = () => {
     const rooms = res.data?.getUser?.ChatRooms?.items?.filter(
       (r) => !r._deleted
     );
+
+    if (rooms.length === 3) {
+      console.log(
+        "\nRESPONSE 2 : ",
+        res.data.getUser.ChatRooms.items[1].chatRoom.users.items
+      );
+      console.log(
+        "\nRESPONSE 3 : ",
+        res.data.getUser.ChatRooms.items[2].chatRoom.users.items
+      );
+    }
+
     const sortedRooms = rooms?.sort(
       (r1, r2) =>
         new Date(r2.chatRoom.updatedAt) - new Date(r1.chatRoom.updatedAt)

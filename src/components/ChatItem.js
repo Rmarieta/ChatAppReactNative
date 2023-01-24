@@ -24,14 +24,21 @@ const ChatItem = ({ item }) => {
   }, []);
 
   useEffect(() => {
+    console.log("Chat room (BEFORE) : ", chatRoom);
+
     const subscription = API.graphql(
       graphqlOperation(onUpdateChatRoom, { filter: { id: { eq: item.id } } })
     ).subscribe({
       next: ({ value }) => {
-        setChatRoom((c) => ({ ...(c || {}), ...value.data.onUpdateChatRoom }));
+        setChatRoom((cr) => ({
+          ...(cr || {}),
+          ...value.data.onUpdateChatRoom,
+        }));
       },
-      error: (error) => console.warn(error),
+      error: (err) => console.warn(err),
     });
+
+    console.log("Chat room (AFTER) : ", chatRoom);
 
     return () => subscription.unsubscribe();
   }, [item.id]);
