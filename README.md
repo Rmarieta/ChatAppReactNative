@@ -2,7 +2,7 @@
 
 # Chat App using React Native
 
-Implementation of a mobile application working in IOS and Android using React Native for the frontend, and AWS Amplify for the backend. The data is fetched from and updated on AWS with GraphQL APIs. 
+Implementation of a mobile application working in IOS and Android using React Native for the frontend and AWS Amplify for the backend. The data is fetched from and updated on AWS with GraphQL APIs. 
 
 As displayed below, the application allows multiple users to have live conversations, based on an authentication at startup where you can create an account. It is possible to create groups and delete/add members after creation.
 
