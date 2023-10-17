@@ -11,7 +11,7 @@ As displayed below, the application allows multiple users to have live conversat
 <br/>
 
 <h2 align="center">
-Create group (left) or Delete group members (right) functionalities
+Real-time messages
 </h2>
 
 <br/>
